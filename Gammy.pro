@@ -37,12 +37,16 @@ win32:{
     HEADERS += src/dxgidupl.h \
                    winres.h winres.rc
     RC_FILE = winres.rc
+    QMAKE_CXXFLAGS+= -openmp
+    QMAKE_LFLAGS +=  -openmp
 }
 
 unix:{
     HEADERS += src/x11.h
     SOURCES += src/x11.cpp
     LIBS += -lX11 -lXxf86vm
+    QMAKE_CXXFLAGS+= -fopenmp
+    QMAKE_LFLAGS +=  -fopenmp
 }
 
 RESOURCES += res.qrc
