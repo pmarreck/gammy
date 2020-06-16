@@ -12,7 +12,12 @@ message(Qt version: $$[QT_VERSION])
 TARGET = gammy
 TEMPLATE = app
 
-CONFIG += c++11 c++1z
+CONFIG += c++1z
+
+equals(QMAKE_CXX, clang++) {
+    message("enabling c++17 support in clang")
+    QMAKE_CXXFLAGS += -std=c++17
+}
 
 CONFIG(release) {
     message(Release build)

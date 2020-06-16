@@ -14,6 +14,8 @@ double normalize(double start, double end, double value);
 double remap(double value, double from_min, double from_max, double to_min, double to_max);
 int roundup(int val, int multiple);
 
+int clamp(int v, int lo, int hi);
+
 void setColors(int temp, std::array<double, 3> &c);
 
 int calcBrightness(const std::vector<uint8_t> &buf);

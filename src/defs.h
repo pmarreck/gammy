@@ -16,8 +16,10 @@ enum OS
 
 #ifdef _WIN32
 constexpr OS os = Windows;
+constexpr bool os_is_windows = true;
 #else
 constexpr OS os = Unix;
+constexpr bool os_is_windows = false;
 #endif
 
 extern int brt_step;

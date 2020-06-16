@@ -55,7 +55,7 @@ void MainWindow::init()
 
 		this->setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
 
-		if constexpr(os == OS::Windows)
+		if(os_is_windows)
 		{
 			// Extending brightness range doesn't work yet on Windows
 			ui->extendBr->hide();
@@ -89,7 +89,7 @@ void MainWindow::init()
 		this->trayIcon->show();
 		connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
         
-        if constexpr(os == Windows) 
+        if(os_is_windows)
         {
             menu->setStyleSheet("color:black");
         }
@@ -259,7 +259,7 @@ void MainWindow::on_tempSlider_valueChanged(int val)
 
 	if(this->quit) return;
 
-	if constexpr(os == OS::Windows) {
+	if(os_is_windows) {
 		setGDIGamma(brt_step, val);
 	}
 #ifndef _WIN32
@@ -338,7 +338,7 @@ void MainWindow::on_manBrSlider_valueChanged(int value)
 	brt_step = value;
 	cfg["brightness"] = value;
 
-	if constexpr(os == OS::Windows) {
+	if(os_is_windows) {
 		setGDIGamma(brt_step, cfg["temp_step"]);
 	}
 #ifndef _WIN32

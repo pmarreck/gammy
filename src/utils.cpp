@@ -26,6 +26,11 @@ double remap(double value, double from_min, double from_max, double to_min, doub
 	return lerp(to_min, to_max, normalize(from_min, from_max, value));
 }
 
+// utility function due to no C++17 nor std::clamp being available for whatever reason
+int clamp(int v, int lo, int hi) {
+  return v < lo ? lo : v > hi ? hi : v;
+}
+
 void setColors(int temp_step, std::array<double, 3> &c)
 {
 	const auto interpTemp = [temp_step] (size_t offset)
@@ -75,6 +80,13 @@ double easeInOutQuad(double t, double b, double c, double d)
 	if ((t /= d / 2) < 1) {
 		return c / 2 * t * t + b;
 	} else {
+	    // honestly, functions that mutate arguments are just... bad, but instead of rewriting the algorithm to be functional
+	    // I'm just going to make the build warning go away for now, for violating multiple mutate rule on a single sequence point
+	    // see https://stackoverflow.com/questions/10623114/operation-on-may-be-undefined
+	    // double u = t;
+	    // t -= 1;
+		// return -c / 2 * (t * (u - 2) - 1) + b;
+		// sonofabitch, it failed to work correctly in the GUI. Reinstating the original with the problematic pre-decrement (and build warning)
 		return -c / 2 * ((--t) * (t - 2) - 1) + b;
 	}
 };

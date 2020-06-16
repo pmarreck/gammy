@@ -108,7 +108,7 @@ void X11::fillRamp(std::vector<uint16_t> &ramp, const int brightness, const int 
 
 	for (int32_t i = 0; i < ramp_sz; ++i)
 	{
-		const int val = std::clamp(int(normalize(0, brt_slider_steps, brightness) * ramp_mult * i), 0, UINT16_MAX);
+		const int val = clamp(int(normalize(0, brt_slider_steps, brightness) * ramp_mult * i), 0, UINT16_MAX);
 
 		r[i] = uint16_t(val * c[0]);
 		g[i] = uint16_t(val * c[1]);

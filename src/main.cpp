@@ -243,7 +243,7 @@ void adjustBrightness(Args &args, MainWindow &w)
 		}
 
 		int target = brt_slider_steps - int(remap(img_br, 0, 255, 0, brt_slider_steps)) + cfg["offset"].get<int>();
-		target = std::clamp(target, cfg["min_br"].get<int>(), cfg["max_br"].get<int>());
+		target = clamp(target, cfg["min_br"].get<int>(), cfg["max_br"].get<int>());
 
 		if (target == brt_step)
 		{
@@ -390,7 +390,7 @@ void recordScreen(Args &args, convar &ss_cv, MainWindow &w)
 				force = false;
 
 				{
-					std::lock_guard lock (args.br_mtx);
+					const std::lock_guard<std::mutex> lock (args.br_mtx);
 
 					args.img_br = img_br;
 					args.br_needs_change = true;
@@ -518,7 +518,7 @@ int main(int argc, char **argv)
 
 	LOGV << "recordScreen joined";
 
-	if constexpr (os == OS::Windows) {
+	if(os_is_windows) {
 		setGDIGamma(brt_slider_steps, 0);
 	}
 #ifndef _WIN32
